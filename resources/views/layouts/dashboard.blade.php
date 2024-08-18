@@ -10,7 +10,7 @@
 
 <body>
     <h1 class="text-xl font-bold">
-        Admin Page
+        Client Page
     </h1>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
