@@ -13,3 +13,6 @@ Route::get('/peserta', function () {
 Route::get('/', function () {
     return view('/layouts/landingPage');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
