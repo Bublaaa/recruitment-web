@@ -113,9 +113,9 @@
     </aside>
     @endauth
     <!-- Content -->
-    <h1 class="text-xl font-bold">
-        Landing Page
-    </h1>
+    <main class="">
+        @yield('content')
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     <script>
     // Get the toggle button and icons
