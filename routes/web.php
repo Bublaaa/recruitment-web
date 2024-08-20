@@ -1,32 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+
 
 // Redirect based on user role
-Route::middleware(['auth'])->group(function () {
-    $user = auth()->user();
-    if($user->role == "admin"){
-        return redirect('/admin');
-    }
-    elseif($user->role == "peserta") {
-        return redirect('/client');
-    }
-    else{
-        return redirect('/');
-    }
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('layouts.adminPage');
+    });
+    Route::resource('user', UserController::class);
 });
 
-Route::get('/admin', function () {
-    return view('/layouts/adminPage');
+Route::middleware(['auth'])->prefix('client')->group(function () {
+    Route::get('/', function () {
+        return view('layouts.clientPage');
+    });
 });
 
-Route::get('/client', function () {
-    return view('/layouts/clientPage');
-});
-
-// Route::get('/', function () {
-//     return view('/layouts/landingPage');
-// });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Default route or landing page
+Route::get('/', function () {
+    return view('layouts.landingPage');
+});
