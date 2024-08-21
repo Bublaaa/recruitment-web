@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -11,7 +12,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $admins = User::where('role','admin')->get();
+        $clients = User::where('role','peserta')->get();
+        return view('./pages/users') ->with([
+            'admins' => $admins,
+            'clients' => $clients,
+        ]);
     }
 
     /**
@@ -59,6 +65,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id', $id)->get();
+        // if ($user->profile_image) {
+        //     Storage::delete($user->profile_image);
+        // }
+        if($user->delete()){
+            return redirect()->back()->with('success', 'Sukses delete akun.');
+        }
     }
 }

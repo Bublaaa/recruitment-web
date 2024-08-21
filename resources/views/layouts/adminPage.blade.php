@@ -8,13 +8,13 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
+<body class="bg-white dark:bg-gray-700">
     <div class="flex flex-col">
         @include('./components/navBar')
         <div class="flex flex-row">
             @include('./components/sideBar')
             <!-- Content -->
-            <main class="">
+            <main class="md:ml-64 mt-20 p-4 w-full">
                 @yield('content')
             </main>
         </div>

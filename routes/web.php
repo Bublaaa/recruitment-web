@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 
 // Redirect based on user role
@@ -9,6 +10,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('layouts.adminPage');
     });
+    Route::get('/register', [AdminController::class, 'showAdminRegistrationForm'])->name('admin.showregister');
+    Route::post('/register', [AdminController::class, 'register'])->name('admin.register');
     Route::resource('user', UserController::class);
 });
 
