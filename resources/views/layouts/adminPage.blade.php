@@ -25,13 +25,12 @@
     <script>
     $(document).ready(function() {
         let currentUrl = window.location.pathname;
-        console.log(currentUrl);
 
+        // Function to load content via AJAX
         function loadContent(url) {
             if (url === currentUrl) {
-                return;
+                return; // Do nothing if the content is already loaded
             }
-
             $.ajax({
                 url: url,
                 method: 'GET',
@@ -45,16 +44,17 @@
                     // Update #main-content with the new content
                     $('#main-content').html(newContent);
 
-                    console.log(newContent);
-
                     // Re-initialize any JS plugins if necessary
                     if (typeof flowbite !== 'undefined') {
-                        flowbite.init();
+                        flowbite.init(); // Re-initialize Flowbite components
                     }
 
                     // Update the current URL
                     history.pushState(null, '', url);
                     currentUrl = url;
+
+                    // Reattach event listeners for newly loaded content
+                    attachListeners();
                 },
                 error: function(xhr, status, error) {
                     console.error('There was a problem with the AJAX request:', error);
@@ -62,16 +62,27 @@
             });
         }
 
-        $('.sidebar-link').on('click', function(event) {
-            event.preventDefault();
-            const url = $(this).attr('href');
-            loadContent(url);
-        });
+        // Function to attach event listeners
+        function attachListeners() {
+            $('.ajax-link').on('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+                const url = $(this).attr('href');
+                console.log('AJAX link clicked:', url); // Log the clicked link for debugging
+                loadContent(url); // Call the loadContent function
+            });
+        }
 
-        $(window).on('popstate', function(event) {
-            const url = location.pathname;
-            loadContent(url);
-        });
+        // Handle browser back/forward buttons
+        function handlePopState() {
+            $(window).on('popstate', function(event) {
+                const url = location.pathname; // Get the current URL from the browser
+                loadContent(url); // Load content based on the URL
+            });
+        }
+
+        // Initial setup
+        attachListeners(); // Attach event listeners when the document is ready
+        handlePopState(); // Handle back/forward navigation
     });
     </script>
 </body>

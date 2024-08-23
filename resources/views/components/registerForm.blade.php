@@ -1,5 +1,4 @@
 @extends('layouts.adminPage')
-
 @section('content')
 <div class="flex justify-center items-center max-w-sm mx-auto">
     <form method="POST" action="{{ route('admin.register') }}"
