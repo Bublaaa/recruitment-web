@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" /> -->
     @vite('resources/css/app.css')
 </head>
 
@@ -14,44 +16,64 @@
         <div class="flex flex-row">
             @include('./components/sideBar')
             <!-- Content -->
-            <main class="md:ml-64 mt-20 p-4 w-full">
+            <main id="main-content" class="md:ml-64 mt-20 p-4 w-full">
                 @yield('content')
             </main>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     <script>
-    // Get the toggle button and icons
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const lightIcon = document.getElementById('theme-toggle-light-icon');
-    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    $(document).ready(function() {
+        let currentUrl = window.location.pathname;
+        console.log(currentUrl);
 
-    // On page load or when changing themes, ensure the correct icon is displayed
-    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia(
-            '(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-        darkIcon.classList.remove('hidden');
-    } else {
-        lightIcon.classList.remove('hidden');
-    }
+        function loadContent(url) {
+            if (url === currentUrl) {
+                return;
+            }
 
-    themeToggleBtn.addEventListener('click', () => {
-        // Toggle the dark class on the root element
-        document.documentElement.classList.toggle('dark');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(html) {
+                    // Create a temporary DOM element to extract specific content
+                    let tempDom = $('<div></div>').append($.parseHTML(html));
 
-        // Toggle which icon is visible
-        lightIcon.classList.toggle('hidden');
-        darkIcon.classList.toggle('hidden');
+                    // Extract the content you want to load, e.g., the content inside #main-content
+                    let newContent = tempDom.find('#main-content').html();
 
-        // Save the user's preference in local storage
-        if (document.documentElement.classList.contains('dark')) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
+                    // Update #main-content with the new content
+                    $('#main-content').html(newContent);
+
+                    console.log(newContent);
+
+                    // Re-initialize any JS plugins if necessary
+                    if (typeof flowbite !== 'undefined') {
+                        flowbite.init();
+                    }
+
+                    // Update the current URL
+                    history.pushState(null, '', url);
+                    currentUrl = url;
+                },
+                error: function(xhr, status, error) {
+                    console.error('There was a problem with the AJAX request:', error);
+                }
+            });
         }
+
+        $('.sidebar-link').on('click', function(event) {
+            event.preventDefault();
+            const url = $(this).attr('href');
+            loadContent(url);
+        });
+
+        $(window).on('popstate', function(event) {
+            const url = location.pathname;
+            loadContent(url);
+        });
     });
     </script>
 </body>
-
 
 </html>

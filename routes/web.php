@@ -10,6 +10,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('layouts.adminPage');
     });
+    Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.showDashboard');
     Route::get('/register', [AdminController::class, 'showAdminRegistrationForm'])->name('admin.showregister');
     Route::post('/register', [AdminController::class, 'register'])->name('admin.register');
     Route::resource('user', UserController::class);

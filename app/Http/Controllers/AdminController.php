@@ -14,6 +14,10 @@ class AdminController extends Controller
         return view('./components/registerForm');
     }
 
+    public function showDashboard(){
+        return view('./pages/adminDashboard');
+    }
+
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();

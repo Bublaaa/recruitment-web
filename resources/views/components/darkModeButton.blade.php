@@ -19,3 +19,35 @@
         <path d="M5.32178 5.32227L4.92894 4.92943" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
     </svg>
 </button>
+
+<script>
+// Get the toggle button and icons
+const themeToggleBtn = document.getElementById('theme-toggle');
+const lightIcon = document.getElementById('theme-toggle-light-icon');
+const darkIcon = document.getElementById('theme-toggle-dark-icon');
+
+// On page load or when changing themes, ensure the correct icon is displayed
+if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia(
+        '(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark');
+    darkIcon.classList.remove('hidden');
+} else {
+    lightIcon.classList.remove('hidden');
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    // Toggle the dark class on the root element
+    document.documentElement.classList.toggle('dark');
+
+    // Toggle which icon is visible
+    lightIcon.classList.toggle('hidden');
+    darkIcon.classList.toggle('hidden');
+
+    // Save the user's preference in local storage
+    if (document.documentElement.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+});
+</script>
