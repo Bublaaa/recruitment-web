@@ -25,8 +25,7 @@
                 @csrf
                 <!-- Full name -->
                 <div class="">
-                    <label for="name"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Full Name') }}</label>
+                    <label for="name" class="form-label">{{ __('Full Name') }}</label>
                     <input id="name" type="text" name="name" value="{{ old('name') }}" required autocomplete="name"
                         autofocus
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') border-red-500 @enderror">
@@ -38,8 +37,7 @@
                 </div>
                 <!-- Email -->
                 <div class="">
-                    <label for="email"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Email') }}</label>
+                    <label for="email" class="form-label">{{ __('Email') }}</label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('email') border-red-500 @enderror">
                     @error('email')
@@ -50,8 +48,7 @@
                 </div>
                 <!-- Password -->
                 <div class="">
-                    <label for="password"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Password') }}</label>
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
                     <input id="password" type="password" name="password" required autocomplete="new-password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('password') border-red-500 @enderror">
                     @error('password')
@@ -62,8 +59,7 @@
                 </div>
                 <!-- Confirm password -->
                 <div class="">
-                    <label for="password-confirm"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Confirm Password') }}</label>
+                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
                     <input id="password-confirm" type="password" name="password_confirmation" required
                         autocomplete="new-password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

@@ -16,7 +16,7 @@
         <div class="flex flex-row">
             @include('./components/sideBar')
             <!-- Content -->
-            <main id="main-content" class="md:ml-64 mt-20 p-4 w-full">
+            <main id="main-content" class="md:ml-64 mt-20 w-full">
                 @yield('content')
             </main>
         </div>

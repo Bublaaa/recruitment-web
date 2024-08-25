@@ -49,7 +49,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $client = User::findOrFail($id);
+        return response()->json($client);
     }
 
     /**
@@ -57,8 +58,12 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $client = User::findOrFail($id);
+        $client->update($request->all());
+
+        return redirect()->back()->with('success', 'Client updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
