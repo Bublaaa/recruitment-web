@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" /> -->
     @vite('resources/css/app.css')
 </head>
 
@@ -26,7 +25,6 @@
     $(document).ready(function() {
         let currentUrl = window.location.pathname;
 
-        // Function to load content via AJAX
         function loadContent(url) {
             if (url === currentUrl) {
                 return; // Do nothing if the content is already loaded
@@ -35,26 +33,20 @@
                 url: url,
                 method: 'GET',
                 success: function(html) {
-                    // Create a temporary DOM element to extract specific content
                     let tempDom = $('<div></div>').append($.parseHTML(html));
-
-                    // Extract the content you want to load, e.g., the content inside #main-content
                     let newContent = tempDom.find('#main-content').html();
-
-                    // Update #main-content with the new content
                     $('#main-content').html(newContent);
 
-                    // Re-initialize any JS plugins if necessary
                     if (typeof flowbite !== 'undefined') {
                         flowbite.init(); // Re-initialize Flowbite components
                     }
 
-                    // Update the current URL
                     history.pushState(null, '', url);
                     currentUrl = url;
 
-                    // Reattach event listeners for newly loaded content
+                    // Reattach event listeners
                     attachListeners();
+                    attachRowClickListeners();
                 },
                 error: function(xhr, status, error) {
                     console.error('There was a problem with the AJAX request:', error);
@@ -62,27 +54,61 @@
             });
         }
 
-        // Function to attach event listeners
         function attachListeners() {
-            $('.ajax-link').on('click', function(event) {
+            $('.ajax-link').off('click').on('click', function(event) {
                 event.preventDefault(); // Prevent the default link behavior
                 const url = $(this).attr('href');
-                console.log('AJAX link clicked:', url); // Log the clicked link for debugging
-                loadContent(url); // Call the loadContent function
+                loadContent(url);
             });
         }
 
-        // Handle browser back/forward buttons
+        function attachRowClickListeners() {
+            $('tr[data-client-id]').off('click').on('click', function() {
+                var clientId = $(this).data('client-id');
+                console.log('Row clicked with ID:', clientId);
+                loadClientData(clientId);
+            });
+        }
+
         function handlePopState() {
             $(window).on('popstate', function(event) {
-                const url = location.pathname; // Get the current URL from the browser
-                loadContent(url); // Load content based on the URL
+                const url = location.pathname;
+                loadContent(url);
             });
+        }
+
+        function loadClientData(clientId) {
+            console.log(clientId);
+            // AJAX request to get client data
+            $.ajax({
+                url: '/admin/user/' + clientId + '/edit',
+                type: 'GET',
+                success: function(data) {
+                    // Update the form action URL with the client ID
+                    $('#edit-client-form').attr('action', '/admin/user/' + clientId);
+                    // Populate the modal with the client data
+                    $('#modal-client-name').val(data.name);
+                    $('#modal-client-email').val(data.email);
+                    $('#modal-client-category').val(data.category);
+                    $('#modal-client-price').val(data.price);
+                    // Show the modal
+                    $('#edit-client-modal').removeClass('hidden');
+                },
+                error: function() {
+                    alert('Failed to retrieve client data.');
+                }
+            });
+        }
+
+        // Function to hide the modal
+        function hideModal(modalId) {
+            $('#' + modalId).addClass('hidden');
         }
 
         // Initial setup
-        attachListeners(); // Attach event listeners when the document is ready
-        handlePopState(); // Handle back/forward navigation
+        attachListeners();
+        handlePopState();
+        attachRowClickListeners();
     });
     </script>
 </body>
