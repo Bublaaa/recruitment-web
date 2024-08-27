@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 
 
 // Redirect based on user role
@@ -20,6 +21,7 @@ Route::middleware(['auth'])->prefix('client')->group(function () {
     Route::get('/', function () {
         return view('layouts.clientPage');
     });
+    Route::get('/personalData', [ClientController::class, 'showPersonalData'])->name('showPersonalData');
 });
 
 Auth::routes();

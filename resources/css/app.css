@@ -7,11 +7,11 @@
 @tailwind utilities;
 
 .form {
-    @apply flex flex-col w-full bg-white p-6 gap-2 rounded-xl shadow-md dark:bg-gray-800
+    @apply flex flex-col bg-white p-6 gap-2 rounded-xl shadow-md dark:bg-gray-800
 }
 
 .form-container {
-    @apply flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-opacity transition-transform duration-500
+    @apply flex justify-center items-center min-h-screen transition-opacity transition-transform duration-500
 }
 
 .heading1 {
@@ -48,4 +48,8 @@
 
 .form-text-input {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+}
+
+.sidebar-link{
+    @apply flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700
 }

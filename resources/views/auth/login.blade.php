@@ -2,7 +2,7 @@
 @section('content')
 <div class="form-container">
     <div class="flex flex-row max-w-2xl w-full md:mx-auto mx-4 bg-white rounded-2xl shadow-md dark:bg-gray-800 ">
-        <form method="POST" action="{{ route('login') }}" class="form">
+        <form method="POST" action="{{ route('login') }}" class="form md:w-3/5 w-full">
             <!-- Header -->
             <div class=" flex flex-col">
                 <h3 class="heading3">
@@ -65,8 +65,9 @@
                 </div>
             </div>
         </form>
-        <div class="p-4 hidden lg:block">
-            <img class="h-full max-w-full rounded-lg" src="https://via.placeholder.com/300x600" alt="image description">
+        <div class="md:w-2/5 p-4 hidden md:block">
+            <img class="w-auto h-full object-cover rounded-lg" src="https://via.placeholder.com/300x400"
+                alt="image description">
         </div>
     </div>
 </div>
